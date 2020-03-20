@@ -1,0 +1,80 @@
+  
+fun merge([], ys) = ys
+|	merge(xs, []) = xs
+|	merge(x::xs, y::ys) =
+	if x < y then
+		x::merge(xs, y::ys)
+	else
+		y::merge(x::xs, ys);
+
+fun split (l)=
+if null l then ([],[])
+else if length l=1 then (l,[])
+else 
+	let
+	 val (y,z)= split(tl(tl(l)))
+	in
+(hd(l)::y, hd(tl(l))::z)
+end;
+
+
+
+
+fun mergesort(l)=
+if (List.length l =1) then l
+else
+	let
+	val (M,N) = split l
+	in
+	merge(mergesort M, mergesort N)
+end;
+
+
+
+fun insert x [] = [x]
+|	insert x (y::ys) = 
+	if x < y
+		then x::y::ys
+	else
+		y :: (insert x ys)
+
+fun insertionsort [] = []
+|	insertionsort (x::xs) = insert x (insertionsort xs)
+
+val r = Random.rand (1,1);
+
+
+fun genlist n = if n = 0 then [] else (Random.randInt r)::(genlist (n-1));
+
+
+fun timer1 ls=
+	let 
+		val zz=Timer.startCPUTimer()
+	in 
+		(Real.toString(real(length(mergesort(ls)))),Real.toString(Time.toReal(#usr(Timer.checkCPUTimer(zz)))))
+	end;
+
+
+
+fun timer2 ls=
+	let 
+		val zz=Timer.startCPUTimer()
+	in 
+		(Real.toString(real(length(insertionsort(ls)))),Real.toString(Time.toReal(#usr(Timer.checkCPUTimer(zz)))))
+	end;
+fun gen1(ls,n)=
+	if(n>5000)then ls
+	else
+		let val l=genlist n
+		in 
+			gen1(ls@[timer1(l)],n+100)
+		end;
+fun gen2(ls,n)=
+	if(n>50000)then ls
+	else
+		let val l=genlist n
+		in 
+			gen2(ls@[timer2(l)],n+100)
+		end;
+
+
