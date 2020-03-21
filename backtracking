@@ -1,0 +1,92 @@
+// backtraking
+//works only when 1 path is avaliable and no more
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+
+vector<int> visited;
+
+bool found(bool arr[], int present , int end, int n)
+{		if (present>n*n)
+			return false;
+    	else if (present<n*n)
+		{
+		if (arr[present]==0)
+			return false;
+		else if (present==end)
+			return true;
+		else if(found(arr, present+1, end,n) || found(arr, present+n, end,n))
+		{
+			visited.push_back(present);
+			return true;
+		}	
+			else return false;
+		}
+		
+}
+
+int main()
+{	int n;
+	cout<<"enter number:";
+	cin>>n;
+	int m = n*n;
+	bool arr[m];
+	cout<<"enter matrix:";
+	for(int i=0;i<m;i++)
+	{
+		cin>>arr[i];
+	}
+	int start,end;
+	cout<<"enter start and end";
+	cin>>start>>end;
+	if(found(arr, start, end,n))
+	{
+	cout<<"path is found"<<endl<<"path is:";
+	for(int i=visited.size()-1; i>=0;i--)
+	cout<<visited[i]<<"->";
+	cout<<end;
+	}
+	else cout<<"path does not exist";
+
+}
+
+
+/*
+enter number:5
+enter matrix:
+1 0 0 0 0
+1 1 1 0 0
+0 1 0 1 0
+1 1 1 1 1
+0 0 0 0 1
+enter start and end 0 24
+path is found
+path is:0->5->6->11->16->17->18->19->24
+
+
+enter number:5
+enter matrix:
+1 0 0 1 0
+1 0 0 1 0
+1 0 0 1 0
+1 0 0 1 0
+0 0 0 0 0
+enter start and end 0 19
+path does not exist
+
+
+enter number:7
+enter matrix:
+1 0 0 0 0 0 0
+1 1 0 1 0 0 0
+0 1 0 0 0 0 0
+0 1 1 0 0 0 0
+1 1 0 0 0 0 0
+0 1 1 1 1 1 0
+0 0 0 0 0 0 0
+enter start and end0 40
+path is found
+path is:0->7->8->15->22->29->36->37->38->39->40
+
+*/
