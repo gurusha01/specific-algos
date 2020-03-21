@@ -1,2 +1,2 @@
 # specific-algos
-this repository contains a bunch of algorithms , their explanations and their codes in python, java, c++ and perhaps some in sml toojust to help the budding programmers
+this repository contains a bunch of algorithms , their codes in python, sml, c++ and perhaps some inj ava too just to help the budding programmers
